@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static 'app/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/yourcode.js"></script>
+
+
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center">Django Djourney</h1>
+    <div id="todos">
+        <div v-if="errorMessage">You must enter a Todo item</div>
+        <div class="row mt-5 text-center">
+            <input v-model="newTodo" id="new-todo" @keydown.enter="addNewTodo" class="form-control col-md-11"
+            placeholder="Add new TODO...">
+            <div class="col-md-1">
+                <button @click="addNewTodo" class="btn btn-success">Add</button>
+            </div>
+        </div>
+
+        <hr>
+        <h4 class="text-center">Todos</h4>
+        <div v-if="notCompleted.length < 1" class="text-center">No TODOs</div>
+        <ul class="list-group shadow">
+            <li v-for="todo in notCompleted"
+                :key="todo.id"
+                class="list-group-item"
+            >
+                <div v-if="todo.editing === false">
+                    <div class="row">
+                        <div @click="completeTodo(todo.id)" class="col-md-11" v-cloak> [[ todo.name ]]</div>
+                        <button @click="todo.editing=true" class="col-md-1 btn btn-dark">Edit</button>
+                    </div>
+
+                </div>
+                <div v-else>
+                    <div class="row">
+                        <input v-model="editingText" @keydown.enter="completeEdit(todo.id)" class="col-md-11">
+                        <div @click="todo.editing=false" class="col-md-1"><img src="{% static 'app/cancel.svg' %}"></div>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+        <h4 v-if="completed.length > 0" class="mt-5 text-center text-muted">Completed</h4>
+        <ul class="list-group shadow">
+            <li v-for="todo in completed"
+                :key="todo.id"
+                class="completed list-group-item"
+            >
+                <div @click="addToNotComplete(todo.id)">[[ todo.name ]]</div>
+            </li>
+        </ul>
+    </div>
+    <script>
+        const todos_url = "{% url 'todos' %}";
+    </script>
+
+</div>
+
+
+</body>
+<script src="{% static 'app/app.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+

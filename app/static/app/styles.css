@@ -1,0 +1,23 @@
+[v-cloak] {
+     background-color: red;
+}
+
+.shadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.shadow-inset{
+        box-shadow: inset 0 0 10px #000000;
+
+}
+
+.list-group-item{
+    transition: transform 1s;
+}
+.list-group-item:hover{
+    transform: scale(1.05, 1.1);
+    background-color: #eeeeee;
+    border-radius: 20px !important;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
